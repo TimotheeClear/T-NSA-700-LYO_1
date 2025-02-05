@@ -1,0 +1,30 @@
+stages:
+  - dependencies
+  - test
+  - build
+
+install_dependencies:
+  image: node:12-alpine
+  stage: dependencies
+  script:
+    - cd front
+    - npm install
+
+test:
+  image: markhobson/node-chrome:latest
+  stage: test
+  script:
+    - cd front
+    - npm install
+    - npm test
+
+build_image_front:
+  image: node:12-alpine
+  stage: build
+  script:
+    - cd front
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - front/dist
